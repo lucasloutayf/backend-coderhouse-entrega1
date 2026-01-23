@@ -1,0 +1,13 @@
+[
+  {
+    "id": 1,
+    "title": "Producto 1",
+    "description": "Descripción del producto",
+    "code": "PROD001",
+    "price": 1000,
+    "status": true,
+    "stock": 50,
+    "category": "Electrónica",
+    "thumbnails": []
+  }
+]
