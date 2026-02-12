@@ -1,0 +1,19 @@
+<h2>Catálogo de Productos</h2>
+
+<div class="product-list">
+  {{#each products}}
+  <div class="product-card">
+    <div>
+        <h3>{{this.title}}</h3>
+        <p class="product-info">{{this.description}}</p>
+        <p class="product-info">Categoría: <strong>{{this.category}}</strong></p>
+        <p class="product-info">Stock: {{this.stock}} | Código: {{this.code}}</p>
+    </div>
+    <div class="price-tag">${{this.price}}</div>
+  </div>
+  {{else}}
+  <div style="grid-column: 1/-1; text-align: center; color: #6b7280; padding: 3rem;">
+    <p>No hay productos disponibles actualmente.</p>
+  </div>
+  {{/each}}
+</div>

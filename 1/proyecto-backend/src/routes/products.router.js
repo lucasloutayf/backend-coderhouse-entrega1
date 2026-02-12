@@ -27,10 +27,15 @@ router.get('/:pid', async (req, res) => {
   }
 });
 
-// POST /api/products
+// POST /api/products - CON SOCKET.IO
 router.post('/', async (req, res) => {
   try {
     const newProduct = await productManager.addProduct(req.body);
+    
+    // Emitir evento de socket
+    const products = await productManager.getProducts();
+    req.io.emit('updateProducts', products);
+    
     res.status(201).json({ status: 'success', payload: newProduct });
   } catch (error) {
     res.status(400).json({ status: 'error', message: error.message });
@@ -47,10 +52,15 @@ router.put('/:pid', async (req, res) => {
   }
 });
 
-// DELETE /api/products/:pid
+// DELETE /api/products/:pid - CON SOCKET.IO
 router.delete('/:pid', async (req, res) => {
   try {
     await productManager.deleteProduct(parseInt(req.params.pid));
+    
+    // Emitir evento de socket
+    const products = await productManager.getProducts();
+    req.io.emit('updateProducts', products);
+    
     res.json({ status: 'success', message: 'Producto eliminado' });
   } catch (error) {
     res.status(404).json({ status: 'error', message: error.message });
