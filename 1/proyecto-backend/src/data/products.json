@@ -1,1 +1,24 @@
-[]
+[
+  {
+    "id": 1,
+    "title": "Botella de agua",
+    "description": "Iknzi",
+    "code": "1573",
+    "price": 20,
+    "status": true,
+    "stock": 200,
+    "category": "Iknzi",
+    "thumbnails": []
+  },
+  {
+    "id": 2,
+    "title": "a",
+    "description": "a",
+    "code": "a",
+    "price": 1,
+    "status": true,
+    "stock": 1,
+    "category": "a",
+    "thumbnails": []
+  }
+]

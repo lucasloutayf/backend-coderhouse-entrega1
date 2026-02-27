@@ -2,6 +2,7 @@ import express from 'express';
 import { engine } from 'express-handlebars';
 import { Server } from 'socket.io';
 import { createServer } from 'http';
+import mongoose from 'mongoose'; // <-- IMPORTAMOS MONGOOSE
 import productsRouter from './routes/products.router.js';
 import cartsRouter from './routes/carts.router.js';
 import viewsRouter from './routes/views.router.js';
@@ -41,9 +42,24 @@ io.on('connection', (socket) => {
   });
 });
 
-// Iniciar servidor
-httpServer.listen(PORT, () => {
-  console.log(`Servidor escuchando en puerto ${PORT}`);
-});
+// NUEVO: Función para conectar a MongoDB e iniciar el servidor
+const environment = async () => {
+    try {
+        // Conexión a MongoDB Atlas
+        await mongoose.connect(process.env.MONGO_URI);
+        console.log("Base de datos conectada correctamente");
+        
+        // Iniciar servidor SOLO si la base de datos se conectó con éxito
+        httpServer.listen(PORT, () => {
+            console.log(`Servidor escuchando en puerto ${PORT}`);
+        });
+    } catch (error) {
+        console.error("Error fatal al conectar la base de datos:", error);
+        process.exit(1); // Detiene la ejecución si hay un error crítico
+    }
+};
+
+// Ejecutamos la función de inicialización
+environment();
 
 export { io };

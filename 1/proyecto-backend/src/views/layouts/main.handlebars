@@ -3,219 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-commerce Backend</title>
-    <!-- Fuente moderna de Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <title>E-Commerce</title>
+    
+    <!-- FUENTE POPPINS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- TOASTIFY CSS y JS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+     <!-- SWEETALERT2 PARA MODALES DE CONFIRMACIÓN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
     <style>
-        :root {
-            --primary: #0a640f;
-            --primary-hover: #06500a;
-            --danger: #dc2626;
-            --danger-hover: #b91c1c;
-            --bg-body: #f3f4f6;
-            --bg-card: #ffffff;
-            --text-main: #1f2937;
-            --text-muted: #6b7280;
-            --border: #e5e7eb;
-        }
+        * { box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { margin: 0; padding: 0; background-color: #f3f4f6; color: #1f2937; }
+        
+        /* Navbar */
+        .navbar { background-color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 2rem; }
+        .nav-brand { color: #0b5f1e; font-weight: 800; font-size: 1.25rem; text-decoration: none; }
+        .nav-links a { text-decoration: none; color: #6b7280; margin-left: 1.5rem; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+        .nav-links a:hover { color: #0b5f1e; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--bg-body);
-            color: var(--text-main);
-            margin: 0;
-            padding: 0;
-            line-height: 1.5;
-        }
+        /* Formularios */
+        .form-container { background: white; padding: 2rem; border-radius: 0.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.05); max-width: 600px; margin: 0 auto 3rem auto; }
+        .form-group { margin-bottom: 1rem; }
+        .form-group input { width: 100%; padding: 0.75rem; border: 1px solid #d1d5db; border-radius: 0.375rem; outline: none; font-family: 'Poppins', sans-serif; }
+        .form-group input:focus { border-color: #0b5f1e; }
+        button { font-family: 'Poppins', sans-serif; }
+        button[type="submit"] { width: 100%; padding: 0.75rem; background-color: #0b5f1e; color: white; border: none; border-radius: 0.375rem; font-weight: 600; cursor: pointer; margin-top: 1rem; transition: background 0.2s; }
+        button[type="submit"]:hover { background-color: #084615; }
 
-        /* Navbar simple */
-        header {
-            background-color: var(--bg-card);
-            border-bottom: 1px solid var(--border);
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-        }
-
-        header h1 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin: 0;
-            color: var(--primary);
-        }
-
-        nav a {
-            color: var(--text-muted);
-            text-decoration: none;
-            margin-left: 1.5rem;
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: color 0.2s;
-        }
-
-        nav a:hover, nav a.active {
-            color: var(--primary);
-        }
-
-        /* Contenedor principal */
-        main {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1.5rem;
-        }
-
-        /* Títulos de sección */
-        h2 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            color: var(--text-main);
-        }
-
-        /* Grid de productos */
-        .product-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1.5rem;
-        }
-
-        /* Tarjetas de productos */
-        .product-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.5rem;
-            transition: transform 0.2s, box-shadow 0.2s;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .product-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
-        }
-
-        .product-card h3 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin: 0 0 0.5rem 0;
-            color: var(--text-main);
-        }
-
-        .product-info {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-bottom: 0.5rem;
-        }
-
-        .price-tag {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--text-main);
-            margin: 1rem 0;
-        }
-
-        /* Formulario */
-        .form-container {
-            background: var(--bg-card);
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
-            margin-bottom: 3rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .form-group {
-            margin-bottom: 1rem;
-        }
-
-        input {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            font-size: 0.95rem;
-            transition: border-color 0.2s;
-            box-sizing: border-box;
-        }
-
-        input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-        }
-
-        /* Botones */
-        button {
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            font-size: 0.95rem;
-            width: 100%;
-        }
-
-        button[type="submit"] {
-            background-color: var(--primary);
-            color: white;
-            margin-top: 1rem;
-        }
-
-        button[type="submit"]:hover {
-            background-color: var(--primary-hover);
-        }
-
-        .delete-btn {
-            background-color: white;
-            color: var(--danger);
-            border: 1px solid var(--border);
-            margin-top: 1rem;
-        }
-
-        .delete-btn:hover {
-            background-color: #fef2f2;
-            border-color: var(--danger);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            header {
-                padding: 1rem;
-                flex-direction: column;
-                gap: 1rem;
-            }
-            
-            nav a {
-                margin: 0 0.75rem;
-            }
-
-            .product-list {
-                grid-template-columns: 1fr;
-            }
-        }
+        /* Productos */
+        h2 { color: #111827; font-weight: 600; }
+        .product-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1.5rem; }
+        .product-card { background: white; padding: 1.5rem; border-radius: 0.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between; transition: transform 0.2s, box-shadow 0.2s; }
+        .product-card:hover { transform: translateY(-3px); box-shadow: 0 6px 12px rgba(0,0,0,0.1); }
+        .product-card h3 { margin: 0 0 0.5rem 0; font-size: 1.1rem; font-weight: 600; }
+        .product-info { margin: 0.25rem 0; color: #4b5563; font-size: 0.9rem; }
+        .price-tag { font-size: 1.25rem; font-weight: 700; margin: 1rem 0; color: #111827; }
+        .delete-btn { width: 100%; padding: 0.5rem; background-color: transparent; color: #dc2626; border: 1px solid #fca5a5; border-radius: 0.375rem; cursor: pointer; font-weight: 600; transition: all 0.2s; }
+        .delete-btn:hover { background-color: #fef2f2; border-color: #dc2626; }
     </style>
 </head>
 <body>
-    <header>
-        <h1> Gestor de Productos</h1>
-        <nav>
-            <a href="/">Inicio</a>
-            <a href="/realtimeproducts">Tiempo Real</a>
-        </nav>
-    </header>
-
-    <main>
+    <nav class="navbar">
+        <a href="/" class="nav-brand">Gestor de Productos</a>
+        <div class="nav-links">
+            <a href="/">Inicio (Admin)</a>
+            <a href="/realtimeproducts">Gestor Tiempo Real</a>
+            <a href="/products" style="color: #0b5f1e; font-weight: 600;">Tienda / Catálogo</a>
+        </div>
+    </nav>
+    <div class="container">
         {{{body}}}
-    </main>
+    </div>
 </body>
 </html>
